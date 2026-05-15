@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# How X's Algorithm Works
 
-## Getting Started
+A plain-English, one-page explainer of how X (Twitter) decides what shows up in your feed. Designed for people who don't write code or read papers — but want to understand what determines whether their posts get seen.
 
-First, run the development server:
+Based on the open-source release at [github.com/xai-org/x-algorithm](https://github.com/xai-org/x-algorithm) (xAI, May 2026).
+
+## What this is
+
+A single-page Next.js app. Eleven sections, in narrative order:
+
+1. **Hero** — the question this page answers
+2. **The 60-second version** — the whole algorithm in 5 bullets
+3. **Where posts come from** — Thunder (in-network) vs Phoenix Retrieval (out-of-network)
+4. **Narrowing down** — funnel from thousands → ~50
+5. **What gets filtered out** — the visibility filters
+6. **The 19 reactions the AI predicts** — the prediction job
+7. **Boosts vs demotes** — what raises and lowers your score
+8. **Special rules** — author diversity, video bonus, new-user routing, For You vs Following
+9. **What it means for creators** — actionable takeaways
+10. **Common misconceptions** — myth-busting from the released code
+11. **Footer**
+
+The visual design is intentionally minimal. Every section is annotated with `{/* DESIGN: ... */}` comments so it can be redesigned (e.g. in Claude design) without touching content.
+
+## Stack
+
+- Next.js 16 (App Router) + TypeScript
+- Tailwind v4
+- No other runtime dependencies
+- Pure CSS animations (no framer-motion, no chart libraries)
+
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project layout
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+app/
+  layout.tsx
+  page.tsx                 ← composes all sections in order
+  globals.css              ← .section / .eyebrow / .h2 / .lede + animations
+  components/
+    ScrollReveal.tsx       ← fades+rises children on scroll
+    Counter.tsx            ← animated count-up
+    sections/
+      Hero.tsx
+      SixtySeconds.tsx
+      CandidateSources.tsx
+      Funnel.tsx
+      Filters.tsx
+      NineteenReactions.tsx
+      BoostsVsDemotes.tsx
+      SpecialRules.tsx
+      CreatorTakeaways.tsx
+      MythBusting.tsx
+      Footer.tsx
+```
 
-## Learn More
+## Editing content vs editing design
 
-To learn more about Next.js, take a look at the following resources:
+- **Content** lives inside each section component. Rewrite the JSX text directly.
+- **Design** is controlled by four global classes (`.section`, `.eyebrow`, `.h2`, `.lede`) in `app/globals.css`, plus minimal structural Tailwind utilities. Replace or extend those to re-skin the whole page.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Educational explainer. The X algorithm source code itself is licensed by xAI — see their repo.
