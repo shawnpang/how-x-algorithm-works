@@ -1,66 +1,132 @@
-{/* DESIGN: FUNNEL — horizontal bars shrinking dramatically. Could be redone as a real funnel/triangle shape. */}
+"use client";
 
-import ScrollReveal from "@/app/components/ScrollReveal";
-import Counter from "@/app/components/Counter";
+import { useEffect, useMemo, useState } from "react";
+import { nFull, nfmt } from "@/app/lib/data";
 
-type Stage = {
-  label: string;
-  value: number;
-  display?: string;
-  widthPercent: number;
-  delay: number;
-};
-
-const stages: Stage[] = [
-  { label: "Candidates gathered", value: 10000, widthPercent: 100, delay: 0 },
-  { label: "After filters (blocked, seen, etc.)", value: 2000, widthPercent: 20, delay: 150 },
-  { label: "Scored by the AI ranker", value: 2000, widthPercent: 20, delay: 300 },
-  { label: "Top picks shown to you", value: 50, display: "~50", widthPercent: 0.5, delay: 450 },
+const STAGES = [
+  { key: "pool",   label: "Candidates gathered", value: 10000, color: "var(--text-3)", note: "in-network + out-of-network" },
+  { key: "filter", label: "After filters",       value: 4200,  color: "var(--text-2)", note: "blocks · mutes · seen · old · spam" },
+  { key: "ranked", label: "Scored by AI",        value: 1500,  color: "var(--accent)", note: "19 predictions per post" },
+  { key: "top",    label: "Top picks shown",     value: 50,    color: "var(--good)",   note: "what fills your screen" },
 ];
 
+const DOT_KEEP = [1.0, 0.42, 0.15, 0.005];
+
+type Dot = { x: number; y: number; keep: number };
+
 export default function Funnel() {
+  const [stage, setStage] = useState(0);
+  const [auto, setAuto] = useState(true);
+
+  useEffect(() => {
+    if (!auto) return;
+    const id = setInterval(() => setStage((s) => (s + 1) % STAGES.length), 2200);
+    return () => clearInterval(id);
+  }, [auto]);
+
+  const dots = useMemo<Dot[]>(() => {
+    const arr: Dot[] = [];
+    for (let i = 0; i < 400; i++) {
+      arr.push({ x: Math.random(), y: Math.random(), keep: Math.random() });
+    }
+    return arr;
+  }, []);
+
+  const cur = STAGES[stage];
+  const widthPct = 100 - stage * 22;
+
   return (
-    <section className="section">
-      <ScrollReveal>
-        <p className="eyebrow">Step 2 — Narrowing down</p>
-        <h2 className="h2">From thousands to fifty</h2>
-        <p className="lede">
-          Each time you open the app, the system starts with a huge pool and shrinks it stage by stage. Approximate
-          numbers below — actual numbers vary by user.
-        </p>
-      </ScrollReveal>
+    <section className="chapter" id="ch-funnel" style={{ background: "var(--bg-2)" }}>
+      <div className="wrap">
+        <div className="chapter-head">
+          <span className="t-eyebrow">03 · The funnel</span>
+          <h2 className="t-h2">
+            10,000 candidates.<br />
+            <span style={{ color: "var(--good)" }}>50</span> survive.
+          </h2>
+          <p className="t-sub" style={{ maxWidth: 700 }}>
+            From the moment you tap the app, the algorithm shrinks a giant pool stage by stage. Drag the slider to step through.
+          </p>
+        </div>
 
-      <ol className="mt-8 space-y-4">
-        {stages.map((stage) => (
-          <ScrollReveal key={stage.label} delay={stage.delay}>
-            <li className="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center">
-              <span className="sm:col-span-5">{stage.label}</span>
-              <span className="sm:col-span-2">
-                {stage.display === "~50" ? (
-                  <>
-                    ~<Counter to={stage.value} />
-                  </>
-                ) : (
-                  <Counter to={stage.value} />
-                )}
-              </span>
-              <div className="sm:col-span-5">
-                <div
-                  className="anim-grow-bar min-w-[12px] h-3 bg-neutral-800"
-                  style={{ width: `${stage.widthPercent}%` }}
-                  aria-hidden="true"
-                />
-              </div>
-            </li>
-          </ScrollReveal>
-        ))}
-      </ol>
+        <div className="fun-grid">
+          <div className="fun-stage-card">
+            <div className="t-mono" style={{ fontSize: 12, color: "var(--text-3)", letterSpacing: ".14em" }}>
+              STAGE {stage + 1} OF {STAGES.length}
+            </div>
+            <div className="fun-big-num t-num" style={{ color: cur.color }}>{nFull(cur.value)}</div>
+            <div className="fun-big-label">{cur.label}</div>
+            <div className="fun-note">{cur.note}</div>
 
-      <ScrollReveal delay={600}>
-        <p className="mt-6">
-          <small>These are rough order-of-magnitude numbers, not exact counts from the code.</small>
-        </p>
-      </ScrollReveal>
+            <div className="fun-pcts">
+              {STAGES.map((s, i) => (
+                <button
+                  key={s.key}
+                  className={`fun-step ${i === stage ? "is-active" : ""} ${i < stage ? "is-past" : ""}`}
+                  onClick={() => { setStage(i); setAuto(false); }}
+                >
+                  <span className="t-mono num">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="lbl">{s.label}</span>
+                  <span className="val t-num">{nfmt(s.value)}</span>
+                </button>
+              ))}
+            </div>
+
+            <div className="fun-slider-row">
+              <input
+                type="range"
+                min="0"
+                max={STAGES.length - 1}
+                step="1"
+                value={stage}
+                onChange={(e) => { setStage(parseInt(e.target.value)); setAuto(false); }}
+                className="fun-slider"
+                aria-label="Funnel stage"
+              />
+              <button className="btn ghost" onClick={() => setAuto((a) => !a)} style={{ height: 36, padding: "0 14px" }}>
+                {auto ? "Pause" : "Auto"}
+              </button>
+            </div>
+          </div>
+
+          <div className="fun-viz">
+            <div className="fun-dots" aria-hidden="true">
+              {dots.map((d, i) => {
+                const keep = d.keep < DOT_KEEP[stage];
+                return (
+                  <span
+                    key={i}
+                    className="dot"
+                    style={{
+                      left: `${d.x * 100}%`,
+                      top: `${d.y * 100}%`,
+                      opacity: keep ? 1 : 0.08,
+                      background: keep
+                        ? stage === 3 && d.keep < 0.005
+                          ? "var(--good)"
+                          : stage === 2
+                          ? "var(--accent)"
+                          : stage === 1
+                          ? "var(--text-2)"
+                          : "var(--text-3)"
+                        : "var(--text-4)",
+                      transform: `scale(${keep ? 1 : 0.6})`,
+                      transitionDelay: `${(d.keep * 600) | 0}ms`,
+                    }}
+                  />
+                );
+              })}
+            </div>
+            <div className="fun-frame" style={{ width: `${widthPct}%` }}>
+              <div className="fun-frame-label t-mono">{cur.label.toUpperCase()}</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="fun-foot t-mono">
+          ROUGH ORDER-OF-MAGNITUDE NUMBERS · ACTUAL COUNTS VARY PER USER
+        </div>
+      </div>
     </section>
   );
 }

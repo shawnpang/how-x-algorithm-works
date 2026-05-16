@@ -1,60 +1,41 @@
-{/* DESIGN: FILTER GRID — looks good as a 2-column grid of small cards. Each card could have an icon. */}
+import { Icon } from "@/app/lib/icons";
+import type { IconName } from "@/app/lib/data";
 
-import ScrollReveal from "@/app/components/ScrollReveal";
-
-type Filter = {
-  title: string;
-  detail: string;
-};
-
-const filters: Filter[] = [
-  { title: "Posts from people you blocked", detail: "Obvious one." },
-  { title: "Posts from people you muted", detail: "Same, but quieter." },
-  { title: "Posts with words you muted", detail: "Your muted-keyword list." },
-  {
-    title: "Posts you've already seen",
-    detail: "Tracked with a probabilistic “have I shown this?” filter.",
-  },
-  { title: "Posts that are too old", detail: "There's a max age — old stuff gets dropped." },
-  { title: "Your own posts", detail: "X doesn't show you your own posts in your feed." },
-  { title: "Duplicate reposts of the same thing", detail: "Only the original or one version survives." },
-  { title: "Posts that fail safety checks", detail: "Spam, gore, violence, content policy violations." },
-  {
-    title: "Posts from accounts you can't see",
-    detail: "Private accounts you don't follow, suspended accounts, paywalled content you haven't paid for.",
-  },
+const FILTERS: { ic: IconName; t: string; d: string }[] = [
+  { ic: "block",  t: "Blocked authors",       d: "Anyone you've blocked. Obvious one." },
+  { ic: "muted",  t: "Muted authors",         d: "Same idea, quieter. They post — you don't see it." },
+  { ic: "ban",    t: "Muted keywords",        d: "Words on your block list. The whole post is filtered out." },
+  { ic: "eye",    t: "Already seen",          d: "A probabilistic 'have I shown this?' filter. No repeats." },
+  { ic: "warn",   t: "Too old",               d: "There's a hard max age. Stale posts get dropped." },
+  { ic: "user",   t: "Your own posts",        d: "X doesn't show you your own stuff in your feed." },
+  { ic: "repost", t: "Duplicate reposts",     d: "Only one version of the same thing survives." },
+  { ic: "flag",   t: "Safety violations",     d: "Spam, gore, violence, policy violations." },
+  { ic: "ban",    t: "Inaccessible accounts", d: "Private, suspended, paywalled if you haven't paid." },
 ];
 
 export default function Filters() {
   return (
-    <section className="section">
-      <ScrollReveal>
-        <p className="eyebrow">Step 3 — What gets filtered out</p>
-        <h2 className="h2">Posts that never even get scored</h2>
-        <p className="lede">
-          Before any AI ranks anything, these posts get dropped from the pile automatically:
-        </p>
-      </ScrollReveal>
+    <section className="chapter" id="ch-filters">
+      <div className="wrap">
+        <div className="chapter-head">
+          <span className="t-eyebrow">04 · Filters</span>
+          <h2 className="t-h2">Posts that never even get scored.</h2>
+          <p className="t-sub" style={{ maxWidth: 700 }}>
+            Before any AI runs, these get dropped from the pile. If your post hits any of these for a given viewer, it&apos;s invisible — no matter how good it is.
+          </p>
+        </div>
 
-      <ScrollReveal delay={150}>
-        <ul className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {filters.map((f) => (
-            <li key={f.title}>
-              <article>
-                <h3>{f.title}</h3>
-                <p className="mt-1">{f.detail}</p>
-              </article>
-            </li>
+        <div className="filt-grid">
+          {FILTERS.map((f, i) => (
+            <div key={i} className="filt-card">
+              <div className="filt-x"><Icon name="x" size={18} stroke={2} /></div>
+              <div className="filt-ic"><Icon name={f.ic} size={20} /></div>
+              <div className="filt-t">{f.t}</div>
+              <div className="filt-d">{f.d}</div>
+            </div>
           ))}
-        </ul>
-      </ScrollReveal>
-
-      <ScrollReveal delay={300}>
-        <p className="mt-8">
-          If your post matches any of these for a given viewer, it&apos;s invisible to that viewer — no matter how good
-          the AI thinks it is.
-        </p>
-      </ScrollReveal>
+        </div>
+      </div>
     </section>
   );
 }
