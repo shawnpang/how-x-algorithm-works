@@ -367,7 +367,7 @@ section.chapter.no-border { border-bottom: 0; }
   display: flex; flex-direction: column;
 }
 .fun-big-num {
-  font-size: clamp(80px, 11vw, 160px); font-weight: 800;
+  font-size: clamp(64px, 7.5vw, 112px); font-weight: 800;
   line-height: 0.9; letter-spacing: -0.05em;
   margin: 16px 0 6px; transition: color .35s;
 }

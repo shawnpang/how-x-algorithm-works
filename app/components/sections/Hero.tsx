@@ -93,7 +93,18 @@ export default function Hero() {
         </div>
 
         <h1 className="t-h1">
-          Every time you open <XGlyph size={66} />,
+          Every time you open{" "}
+          <span
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.04em",
+              whiteSpace: "nowrap",
+              verticalAlign: "baseline",
+            }}
+          >
+            <XGlyph size={66} />,
+          </span>
           <br />
           an AI picks <span className="accent">~50 posts</span>
           <br />
