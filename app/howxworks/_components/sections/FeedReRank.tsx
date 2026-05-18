@@ -1,8 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { AUTHORS, POST_SEEDS, type Author } from "@/app/lib/data";
-import { Icon } from "@/app/lib/icons";
+import { AUTHORS, POST_SEEDS, type Author } from "@/app/howxworks/_lib/data";
+import { Icon } from "@/app/howxworks/_lib/icons";
 
 type FeedPost = {
   id: string;

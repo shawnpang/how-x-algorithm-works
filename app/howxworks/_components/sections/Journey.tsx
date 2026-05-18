@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Icon } from "@/app/lib/icons";
+import { Icon } from "@/app/howxworks/_lib/icons";
 
 const STAGES = [
   { t: "You hit Post",             d: "Your post is published. The clock starts.",                                                                                                              c: "var(--accent)" },

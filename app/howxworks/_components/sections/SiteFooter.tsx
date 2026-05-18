@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { XGlyph } from "@/app/lib/icons";
+import { XGlyph } from "@/app/howxworks/_lib/icons";
 
 export default function SiteFooter() {
   const [shareHref, setShareHref] = useState<string>("#");

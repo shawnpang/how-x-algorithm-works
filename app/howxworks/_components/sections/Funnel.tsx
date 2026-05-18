@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { nFull, nfmt } from "@/app/lib/data";
+import { nFull, nfmt } from "@/app/howxworks/_lib/data";
 
 const STAGES = [
   { key: "pool",   label: "Candidates gathered", value: 10000, color: "var(--text-3)", note: "in-network + out-of-network" },

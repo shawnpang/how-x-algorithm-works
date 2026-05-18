@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { SIGNALS } from "@/app/lib/data";
-import { Icon } from "@/app/lib/icons";
+import { SIGNALS } from "@/app/howxworks/_lib/data";
+import { Icon } from "@/app/howxworks/_lib/icons";
 
 export default function Signals() {
   const [picked, setPicked] = useState<string>("like");

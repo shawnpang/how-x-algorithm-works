@@ -1,9 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { SIGNALS } from "@/app/lib/data";
-import { Icon } from "@/app/lib/icons";
-import { useCountUp } from "@/app/lib/hooks";
+import { SIGNALS } from "@/app/howxworks/_lib/data";
+import { Icon } from "@/app/howxworks/_lib/icons";
+import { useCountUp } from "@/app/howxworks/_lib/hooks";
 
 type Counts = Record<string, number>;
 

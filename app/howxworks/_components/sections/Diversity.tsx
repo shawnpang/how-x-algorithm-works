@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { AUTHORS } from "@/app/lib/data";
-import { Icon } from "@/app/lib/icons";
+import { AUTHORS } from "@/app/howxworks/_lib/data";
+import { Icon } from "@/app/howxworks/_lib/icons";
 
 const DIV_RULE = [
   { n: 1, pct: 100, label: "1st post" },

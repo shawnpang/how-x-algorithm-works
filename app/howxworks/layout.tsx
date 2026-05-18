@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Nav from "@/app/components/Nav";
+import Nav from "@/app/howxworks/_components/Nav";
 
 export const metadata: Metadata = {
   title: "How X's algorithm actually works — a visual guide",

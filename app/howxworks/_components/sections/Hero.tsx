@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useRef } from "react";
-import { fakePost } from "@/app/lib/data";
-import { XGlyph } from "@/app/lib/icons";
+import { fakePost } from "@/app/howxworks/_lib/data";
+import { XGlyph } from "@/app/howxworks/_lib/icons";
 
 type Item = { author: { h: string; n: string; ic: string }; text: string; cls?: string };
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CHAPTERS } from "@/app/lib/data";
+import { CHAPTERS } from "@/app/howxworks/_lib/data";
 
 export default function Nav() {
   const [activeId, setActiveId] = useState<string>(CHAPTERS[0].id);

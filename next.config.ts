@@ -7,11 +7,8 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      {
-        source: "/howxworks",
-        destination: "/x-algorithm",
-        permanent: true,
-      },
+      { source: "/x", destination: "/howxworks", permanent: true },
+      { source: "/x-algorithm", destination: "/howxworks", permanent: true },
     ];
   },
 };

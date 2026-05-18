@@ -1,5 +1,5 @@
-import { Icon } from "@/app/lib/icons";
-import type { IconName } from "@/app/lib/data";
+import { Icon } from "@/app/howxworks/_lib/icons";
+import type { IconName } from "@/app/howxworks/_lib/data";
 
 const FILTERS: { ic: IconName; t: string; d: string }[] = [
   { ic: "block",  t: "Blocked authors",       d: "Anyone you've blocked. Obvious one." },

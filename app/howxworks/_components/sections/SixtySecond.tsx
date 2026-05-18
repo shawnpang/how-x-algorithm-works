@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Icon } from "@/app/lib/icons";
+import { Icon } from "@/app/howxworks/_lib/icons";
 
 const STEPS = [
   { t: "Gather candidates",       d: "Pulls fresh posts from people you follow + a giant pool the AI thinks you'll like." },

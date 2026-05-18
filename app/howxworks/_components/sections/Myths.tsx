@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Icon } from "@/app/lib/icons";
+import { Icon } from "@/app/howxworks/_lib/icons";
 
 const MYTHS = [
   {
