@@ -33,6 +33,14 @@ export default function Home() {
           <h2 className="home-section-title">Writing</h2>
           <ul className="home-list">
             <li>
+              <a href="/llm-as-a-religion">
+                <span className="home-list-title">
+                  LLM as a religion
+                </span>
+                <span className="home-list-meta">Draft</span>
+              </a>
+            </li>
+            <li>
               <a href="/howxworks">
                 <span className="home-list-title">
                   How X&apos;s algorithm actually works
